@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Box from '@material-ui/core/Box';
 import { connect } from 'react-redux';
-import { addMeeting } from '../redux/actionCreator';
+import { addMeeting, delMeeting } from '../redux/actionCreator';
 import MeetingList from './MeetingDetail';
 
 
@@ -11,8 +11,8 @@ const mapStateToProps = (state) =>{
   };
 }
 const mapDispatchToProps = (dispatch) => ({
-  addMeeting: (about) => dispatch(addMeeting(about)),
- 
+  addMeeting: (about,time,id) => dispatch(addMeeting(about,time,id)),
+  delMeeting: (id) => dispatch(delMeeting(id))
 });
 
 class Main extends Component {
@@ -22,7 +22,13 @@ class Main extends Component {
   render(){
     return (
         <div>
-         <MeetingList meetings={this.props.meetings} addMeeting={this.props.addMeeting}/>
+          <Box display="flex" flexDirection="column" alignItems="stretch" marginX={20}>
+              <MeetingList 
+              meetings={this.props.meetings}
+              addMeeting={this.props.addMeeting}
+              delMeeting={this.props.delMeeting}
+            />
+          </Box>
         </div>
     );
   }

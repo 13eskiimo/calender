@@ -11,10 +11,19 @@ export const Reducer = (state= initialState,action)=>{
         
     case ActionTypes.ADD_MEETING:
         var meeting = action.payload;
-        return { ...state, meetings: state.meetings.concat(meeting)};
+        return { 
+            ...state,
+            meetings: state.meetings.concat(meeting)
+        };
 
     case ActionTypes.DEL_MEETING:
-       return state.filter(meeting => meeting.id!==action.payload.id)
+        var id = action.payload.id
+        // console.log(`id ${id}`)
+        return {
+            ...state,
+            meetings: state.meetings.filter(meeting=> meeting.id !== id)
+        };
+    //    return state.meetings.filter(meeting => meeting.id!==action.payload.id)
     
     default:
         return state;
