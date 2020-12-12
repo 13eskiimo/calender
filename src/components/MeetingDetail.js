@@ -18,6 +18,17 @@ const useStyles = makeStyles((theme) => ({
       textAlign: 'center',
       color: theme.palette.text.primary,
     },
+    text: {
+        "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+          borderColor: "green"
+        },
+        "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+          borderColor: "red"
+        },
+        "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+          borderColor: "purple"
+        }
+      }
   }));
   
 function RenderMeeting({meetings,delMeeting}){
@@ -37,7 +48,7 @@ function RenderMeeting({meetings,delMeeting}){
                             </Grid>
                             <Grid item xs={2} >
                             <IconButton aria-label="Delete" onClick={()=>{delMeeting(meeting.id)}}>
-                                <DeleteIcon />
+                                <DeleteIcon  color="secondary" />
                             </IconButton>
                           
                             </Grid>
@@ -64,7 +75,7 @@ function RenderMeeting({meetings,delMeeting}){
                     }}>
                         Today's meetings
                     </Typography>
-                    <Typography style={{
+                    <Typography variant="h5" style={{
                         color: "white"
                     }}>
                         {today}
@@ -87,6 +98,7 @@ function RenderMeeting({meetings,delMeeting}){
         )
     }
 }
+
 
 class MeetingList extends Component {
     constructor(props) {
@@ -128,9 +140,10 @@ class MeetingList extends Component {
             this.state.id
         )
     }
+   
   
     render() { 
-       
+      
         return (
             <div  color="text.primary" >
                 
@@ -156,18 +169,23 @@ class MeetingList extends Component {
                     />
                     </Box>
                  <Box mx={2}my={1}display={{xs:"block" , sm: "inline"}}>
-                        <TextField
-                        className="textfield"
-                        id="outlined-basic"
+                        <TextField 
+                            id="outlined-basic"
                             label="add new meeting"
                             variant="outlined"
                             onChange={this.handleOnChange}
                             required
-                            
+                            inputProps={{
+                                style: {
+                                    color: "white"
+                                }
+                            }}
+                            style={{ borderColor: 'white' }}
                             multiline
                             rows={4}
                             padding={4}
                             marginRight="10"
+                            
                         />
                   </Box>
                   <Box  display={{xs:"block" , sm: "inline"}}>
