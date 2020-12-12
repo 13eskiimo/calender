@@ -22,7 +22,7 @@ class Main extends Component {
   render(){
     return (
         <div>
-          <Box display="flex" flexDirection="column" alignItems="stretch" marginX={20}>
+          <Box display="flex" flexDirection="column" alignItems="stretch" marginX={2}>
               <MeetingList 
               meetings={this.props.meetings}
               addMeeting={this.props.addMeeting}

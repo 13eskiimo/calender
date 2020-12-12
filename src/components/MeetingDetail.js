@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box'
-import { Button, TextField  } from '@material-ui/core';
+import { Button, TextField, Typography  } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import DeleteIcon from "@material-ui/icons/Delete";
+import Paper from '@material-ui/core/Paper'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -23,41 +24,60 @@ const useStyles = makeStyles((theme) => ({
   
 function RenderMeeting({meetings,delMeeting}){
     const classes = useStyles();
-    if (meetings!= null){
+    if (meetings.length !== 0){
         const metings = meetings.map((meeting) => {
             return(
                 <li>
-                 
                     <div className={classes.root}>
-                        <Grid justify="center" alignItems="center" container spacing={3} >
+                        <Grid justify="center" alignItems="center" container spacing={2} >
                            <Grid item xs={2} >
-                                <h5>{meeting.time} </h5>
+                               <h5>{meeting.time} </h5>
                             </Grid>
-                            <Grid item xs={6} >
+                            <Grid item xs={8} >
                              <h5> {meeting.about}</h5>
-                             <hr className="solid"></hr>
+                          
                             </Grid>
                             <Grid item xs={2} >
                             <IconButton aria-label="Delete" onClick={()=>{delMeeting(meeting.id)}}>
                                 <DeleteIcon />
                             </IconButton>
+                          
                             </Grid>
+                        
                         </Grid>
+                        <hr/>
                     </div>
                     
                 </li>
             );
         });
+        
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+        today = mm + '/' + dd + '/' + yyyy;
         return(
-           
-            <div>
-                   <h5 color="text-primary">
-                   Todays meetings
-               </h5>
+            <Grid   justify="center" alignItems="center" container spacing={2}>
+                 <Grid item xs={12} sm={8} spacing={0}   direction="column" >
+             
+                    <Typography  variant="h3" style={{
+                        color: "white"
+                    }}>
+                        Today's meetings
+                    </Typography>
+                    <Typography style={{
+                        color: "white"
+                    }}>
+                        {today}
+                    </Typography>
+               
+                            </Grid>
+               
                 <ul className="list-unstyled">
                     {metings}
                 </ul>
-            </div>
+            </Grid>
               
         );
     }else{
@@ -114,41 +134,49 @@ class MeetingList extends Component {
        
         return (
             <div  color="text.primary" >
-                <Box flexDirection='Column'>
-                <form onSubmit={this.handleSubmit}>
-                <TextField
-                    id="time"
-                    label="pick the time"
-                    type="time"
-                    defaultValue="07:30"
-                    variant="outlined"
-                    InputLabelProps={{
-                    shrink: true,
-                    }}  
-                    inputProps={{
-                    step: 60, // 1 min
-                    }}
-                    onChange={ this.timePicked  }
-                />
-                   <TextField
-                    id="outlined-basic"
-                     label="add new meeting"
-                      variant="outlined"
-                       onChange={this.handleOnChange}
-                       endAdornment={
-                        <InputAdornment position="end">
-                        
-                        </InputAdornment>
-                      }
-                       />
-                       <br/>
-                    <Button variant="contained" color="primary" type="submit" >Add </Button>
-                   
-                </form>
-                </Box>
+                
                 <RenderMeeting meetings={this.props.meetings} delMeeting={this.props.delMeeting} />
-
-               
+               <div Container>
+                <form onSubmit={this.handleSubmit} spacing={1} justify="center" alignItems="center" >
+                <Box my={1} display={{xs:"block" , sm: "inline"}}>
+                    <TextField
+                    className="textfield"
+                        id="time"
+                        label="pick the time"
+                        type="time"
+                        defaultValue="07:30"
+                        variant="outlined"
+                        InputLabelProps={{
+                        shrink: true,
+                        }}  
+                        inputProps={{
+                        step: 60, // 1 min
+                        }}
+                        onChange={ this.timePicked  }
+                        size="small"
+                    />
+                    </Box>
+                 <Box mx={2}my={1}display={{xs:"block" , sm: "inline"}}>
+                        <TextField
+                        className="textfield"
+                        id="outlined-basic"
+                            label="add new meeting"
+                            variant="outlined"
+                            onChange={this.handleOnChange}
+                            required
+                            
+                            multiline
+                            rows={4}
+                            padding={4}
+                            marginRight="10"
+                        />
+                  </Box>
+                  <Box  display={{xs:"block" , sm: "inline"}}>
+                        <Button 
+                    className="textfield" variant="contained" color="primary" type="submit" size="large" >Add </Button>
+                 </Box>
+                </form>
+                </div>
             </div>
         );
     }
