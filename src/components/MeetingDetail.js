@@ -57,7 +57,7 @@ function RenderMeeting({meetings,delMeeting}){
         today = mm + '/' + dd + '/' + yyyy;
         return(
             <Grid   justify="center" alignItems="center" container spacing={2}>
-                 <Grid item xs={12} sm={8} spacing={0}   direction="column" >
+                 <Grid item xs={12} sm={10} spacing={0}   direction="column" >
              
                     <Typography  variant="h3" style={{
                         color: "white"
@@ -70,11 +70,12 @@ function RenderMeeting({meetings,delMeeting}){
                         {today}
                     </Typography>
                
-                            </Grid>
-               
+                </Grid>
+                <Grid item xs={12} sm={10} spacing={0}   direction="column" >
                 <ul className="list-unstyled">
                     {metings}
                 </ul>
+                </Grid>
             </Grid>
               
         );
