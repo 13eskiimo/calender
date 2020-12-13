@@ -2,15 +2,16 @@ import React, { Component } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box'
-import { Button, TextField, Typography  } from '@material-ui/core';
+import { Button, List, Paper, TextField, Typography  } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from "@material-ui/icons/Delete";
 
 const useStyles = makeStyles((theme) => ({
     root: {
-       marginRight:20,
+       marginRight:0,
        marginLeft:20,
        textAlign:'center',
+      
         
     },
     paper: {
@@ -36,17 +37,17 @@ function RenderMeeting({meetings,delMeeting}){
     if (meetings.length !== 0){
         const metings = meetings.map((meeting) => {
             return(
-                <li>
-                    <div className={classes.root}>
-                        <Grid justify="center" alignItems="center" container spacing={2} >
-                           <Grid item xs={2} >
-                               <h5>{meeting.time} </h5>
+                <li >
+                        <Grid  justify="center" alignItems="center"  container spacing={1} >
+                           <Grid item xs={1} >
+                               <h5 style={{color:"black"}}>    {meeting.time}</h5>
+                            
                             </Grid>
-                            <Grid item xs={8} >
-                             <h5> {meeting.about}</h5>
-                          
+                            <Grid item xs={7} >
+                                <h5 style={{color:"black"}}> {meeting.about}</h5>
+                            
                             </Grid>
-                            <Grid item xs={2} >
+                            <Grid item xs={1} >
                             <IconButton aria-label="Delete" onClick={()=>{delMeeting(meeting.id)}}>
                                 <DeleteIcon  color="secondary" />
                             </IconButton>
@@ -54,38 +55,21 @@ function RenderMeeting({meetings,delMeeting}){
                             </Grid>
                         
                         </Grid>
-                        <hr/>
-                    </div>
-                    
+                      
+                    <hr/>
                 </li>
             );
         });
         
-        var today = new Date();
-        var dd = String(today.getDate()).padStart(2, '0');
-        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-        var yyyy = today.getFullYear();
-        today = mm + '/' + dd + '/' + yyyy;
+      
         return(
-            <Grid   justify="center" alignItems="center" container spacing={2}>
-                 <Grid item xs={12} sm={10} spacing={0}   direction="column" >
-             
-                    <Typography  variant="h3" style={{
-                        color: "white"
-                    }}>
-                        Today's meetings
-                    </Typography>
-                    <Typography variant="h5" style={{
-                        color: "white"
-                    }}>
-                        {today}
-                    </Typography>
-               
-                </Grid>
-                <Grid item xs={12} sm={10} spacing={0}   direction="column" >
-                <ul className="list-unstyled">
-                    {metings}
-                </ul>
+            <Grid   justify="center" alignItems="center" container spacing={1}>
+                <Grid item xs={12}  spacing={0} alignItems="center" textAlign="center"  direction="column" >
+                    <Paper style={{maxHeight: 500, overflow: 'auto'}}>
+                        <List className="list-unstyled">
+                            {metings}
+                        </List>
+                    </Paper>
                 </Grid>
             </Grid>
               
@@ -143,14 +127,37 @@ class MeetingList extends Component {
    
   
     render() { 
-      
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); 
+        var yyyy = today.getFullYear();
+        today = dd + ' / ' + mm + ' / ' + yyyy;
         return (
-            <div  color="text.primary" >
-                
-                <RenderMeeting meetings={this.props.meetings} delMeeting={this.props.delMeeting} />
+            <Box width={{sm: 480, md: 720 }} height={{sm:480, md:720}} >
+                <Grid  container alignItems="start" justify="start">
+                    <Grid item xs={12} spacing={0} >
+                       
+                            <Typography  variant="h3" style={{
+                                color: "white"
+                            }}>
+                                Today's meetings
+                            </Typography>
+                            <Typography variant="h4" style={{
+                                color: "white"
+                            }}>
+                                {today}
+                            </Typography>
+                 
+                    </Grid>
+                </Grid>
+                <Box marginBottom={3} border={1} maxHeight="720" borderColor="primary.main"textAlign="center" alignItems="center" justify="center"  >
+                  <RenderMeeting meetings={this.props.meetings} delMeeting={this.props.delMeeting} />
+                </Box>
+
                <div Container>
-                <form onSubmit={this.handleSubmit} spacing={1} justify="center" alignItems="center" >
-                <Box my={1} display={{xs:"block" , sm: "inline"}}>
+               <Box my={20} display="inline">
+                <form onSubmit={this.handleSubmit} justify="center" alignItems="center" >
+               
                     <TextField
                     className="textfield"
                         id="time"
@@ -167,9 +174,9 @@ class MeetingList extends Component {
                         onChange={ this.timePicked  }
                         size="small"
                     />
-                    </Box>
-                 <Box mx={2}my={1}display={{xs:"block" , sm: "inline"}}>
-                        <TextField 
+                 
+                
+                        <TextField
                             id="outlined-basic"
                             label="add new meeting"
                             variant="outlined"
@@ -182,19 +189,20 @@ class MeetingList extends Component {
                             }}
                             style={{ borderColor: 'white' }}
                             multiline
-                            rows={4}
+                            rowsMax={4}
                             padding={4}
                             marginRight="10"
+                            size="small"
                             
                         />
-                  </Box>
-                  <Box  display={{xs:"block" , sm: "inline"}}>
+                
                         <Button 
-                    className="textfield" variant="contained" color="primary" type="submit" size="large" >Add </Button>
-                 </Box>
+                    className="textfield" variant="contained" color="primary" type="submit" size="medium" >Add </Button>
+               
                 </form>
+                </Box>
                 </div>
-            </div>
+            </Box>
         );
     }
 }
